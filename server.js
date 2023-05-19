@@ -15,8 +15,8 @@ const Emitter = require('events')
 
 
 //Set up default mongoose connection
-//var url=process.env.MONGO_URI;
-var url = 'mongodb://127.0.0.1/pizza';
+var url=process.env.MONGO_URI;
+//var url = 'mongodb://127.0.0.1/pizza';
 mongoose.connect(url, { useNewUrlParser: true,useUnifiedTopology: true });
  //Get the default connection
 var db = mongoose.connection;
