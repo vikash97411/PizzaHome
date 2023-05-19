@@ -1,0 +1,66 @@
+<section class="cart py-16">
+    <% if(session.cart){ %>
+    <div class="order container mx-auto lg:px-16 w-full lg:w-1/2 md:w-1/2 md:px-14">
+        <div class="flex items-center border-b border-grey-300 pb-4">
+            <img src="/img/cart-black.png" alt="cart-blank">
+            <h1 class="font-bold text-2xl ml-4">Order summery</h1>
+        </div>
+        <div class="pizza-list">
+            <% for(let pizza of Object.values(session.cart.items)){%>
+            <div class="flex items-center my-8">
+                <img class="w-24" src="<%= pizza.item.image%>" alt="Pizza">
+                <div class="ml-4 flex-1">
+                    <h1><%= pizza.item.name%></h1>
+                    <span><%= pizza.item.size %></span>
+                </div>
+                <span class="flex-1"><%= pizza.qty%></span>
+                <span class="font-bold text-lg">&#x20B9 <%= pizza.item.price * pizza.qty %></span>
+            </div>
+            <%}%>
+ 
+        </div>
+        <hr>
+        <div class="text-center lg:text-right md:text-right w-full  py-4">
+            <div>
+                <span class="text-xl font-bold">Toal Amount:</span>
+                <span class="text-2xl font-bold amount ml-2">&#x20B9 <%= session.cart.totalPrice %></span>
+            </div>
+            <% if(user){%>
+            <div class="w-full ">
+                <form action="/orders" method="post" class="mt-12 " id="payment_form">
+                    <label for="payment_mode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
+                    <select id="payment_mode"
+                      name="paymentType"  class="text-sm  focus:ring-blue-500 focus:border-blue-500 block mb-4 w-full lg:w-1/2  lg:ml-auto p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                 
+                        <option value="cod">Cash on delivery</option>
+                        <option value="card">Pay with card</option>
+                      
+                    </select>
+
+                    <input type="text" name="phone" placeholder="Phone Number" class="border border-grey-400 p-2 mb-4 w-full lg:w-1/2 mx-auto lg:ml-auto">
+                    <input type="text" name="address" placeholder="Address" class="border border-grey-400 p-2 mb-4 w-full lg:w-1/2 mx-auto lg:ml-auto">
+                    <div id="card_input" class="w-full lg:w-1/2  lg:ml-auto mt-4  p-2"></div>
+                    <div class="sub_btn">
+                        <button type="submit" class="mt-4 px-6 py-2 rounded-full text-white btn-primary font-bold">Order Now</button>
+                    </div>
+                </form>
+            </div>
+            <%} else {%>
+            <a href="/login" class="inline-block cursor-pointer px-6 py-2 mt-6 rounded-full text-white btn-primary font-bold">
+                Login to Continue.</a>
+              <% } %>  
+        </div>
+    </div>
+    <% } else {%>
+    <div class="empty-cart py-16">
+        <div class="container mx-auto text-center">
+            <h1 class="text-3xl font-bold mb-2">Cart Empty 😔</h1>
+            <p class="text-grey-500 text-lg mb-12">You probably haven't ordered pizza yet. <br>
+                To order a pizza,go to main page.
+            </p>
+            <img class="w-2/5 mx-auto" src="/img/empty-cart.png" alt="empty-cart">
+            <a href="/" class="inline-block rounded-full py-2 px-6 btn-primary text-white font-bold mt-12">Go Back</a>
+        </div>
+    </div>
+    <% } %>
+</section>
